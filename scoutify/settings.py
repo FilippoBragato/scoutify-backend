@@ -39,6 +39,9 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,filo99.py
 
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
+CORS_ORIGIN_WHITELIST = [
+    'https://scoutify-6374f.web.app/'
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,13 +52,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # api
-    'corsheaders',
     "rest_framework",
     'rest_framework_simplejwt.token_blacklist',
     # owns
     "scout",
     "fantascout",
     "article",
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -155,7 +158,3 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ORIGIN_WHITELIST = [
-    'https://scoutify-6374f.web.app/'
-]
-CORS_ORIGIN_ALLOW_ALL = True
