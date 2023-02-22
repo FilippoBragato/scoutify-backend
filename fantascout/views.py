@@ -3,12 +3,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import FantaTask, ScoutCompleteTask
 from .serializer import FantaTaskSerializer, ScoutCompleteTaskSerializer
+import sys
 
 # REST FOR FANTATASK
-@permission_required('fantascout.view_fantatask')
 @api_view(['GET'])
-@login_required
 def getAllFantatask(request):
+    print ('Goodbye, cruel world!')
+    print(request.user.username)
     fantatasks = FantaTask.objects.order_by("type", "-point")
     serializer = FantaTaskSerializer(fantatasks, many=True)
     return Response(serializer.data)
