@@ -15,11 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from pages.views import homepage_view
 from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
-    path("", homepage_view, name="home"),
     path('token/', 
           jwt_views.TokenObtainPairView.as_view(), 
           name ='token_obtain_pair'),
