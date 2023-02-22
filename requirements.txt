@@ -1,0 +1,13 @@
+asgiref==3.5.2
+certifi==2022.12.7
+Django==4.1
+django-cors-headers==3.13.0
+django-filter==22.1
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2
+Markdown==3.4.1
+PyJWT==2.6.0
+pytz==2022.7.1
+sqlparse==0.4.3
+tzdata==2022g
+wincertstore==0.2
