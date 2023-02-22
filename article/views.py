@@ -4,10 +4,7 @@ from rest_framework.decorators import api_view
 from .models import Article
 from .serializer import ArticleSerializer
 
-# Create your views here.
 # REST FOR Article
-# @login_required
-# @permission_required('fantascout.view_Article')
 @api_view(['GET'])
 def getAllArticles(request):
     articles = Article.objects.order_by("-date")
@@ -15,37 +12,40 @@ def getAllArticles(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
-# @login_required
-# @permission_required('fantascout.add_Article')
 def addArticle(request):
-    serializer = ArticleSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        if request.user.has_perm('article.add_article'):
+            serializer = ArticleSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+            return Response(serializer.data)
+    return Response({'error': 'You should not be here'}, status=401)
 
 @api_view(['PUT'])
-# @login_required
-# @permission_required('fantascout.change_Article')
 def editArticle(request, pk):
-    try:
-        task = Article.objects.get(pk=pk)
-    except Article.DoesNotExist:
-        return Response(status=404)
-    serializer = ArticleSerializer(task, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=400)
+    if request.user.is_authenticated:
+        if request.user.has_perm('article.change_article'):
+            try:
+                task = Article.objects.get(pk=pk)
+            except Article.DoesNotExist:
+                return Response(status=404)
+            serializer = ArticleSerializer(task, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=400)
+    return Response({'error': 'You should not be here'}, status=401)
 
 
 @api_view(['DELETE'])
-# @login_required
-# @permission_required('fantascout.delete_Article')
 def deleteArticle(request, pk):
-    try:
-        task = Article.objects.get(pk=pk)
-    except Article.DoesNotExist:
-        return Response(status=404)
-    serializer = ArticleSerializer(task)
-    task.delete()
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        if request.user.has_perm('article.delete_article'):
+            try:
+                task = Article.objects.get(pk=pk)
+            except Article.DoesNotExist:
+                return Response(status=404)
+            serializer = ArticleSerializer(task)
+            task.delete()
+            return Response(serializer.data)
+    return Response({'error': 'You should not be here'}, status=401)
