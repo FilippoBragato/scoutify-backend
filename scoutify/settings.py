@@ -42,6 +42,7 @@ DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 CORS_ORIGIN_WHITELIST = [
     'https://scoutify-6374f.web.app/'
 ]
+CORS_ALLOW_CREDENTIALS = True
 # Application definition
 
 INSTALLED_APPS = [
