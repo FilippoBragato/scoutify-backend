@@ -8,11 +8,12 @@ import sys
 # REST FOR FANTATASK
 @api_view(['GET'])
 def getAllFantatask(request):
-    print ('Goodbye, cruel world!')
-    print(request.user.username)
-    fantatasks = FantaTask.objects.order_by("type", "-point")
-    serializer = FantaTaskSerializer(fantatasks, many=True)
-    return Response(serializer.data)
+    if request.user.is_authenticated:
+        if request.user.has_perm('fantascout.view_fantatask'):
+            fantatasks = FantaTask.objects.order_by("type", "-point")
+            serializer = FantaTaskSerializer(fantatasks, many=True)
+            return Response(serializer.data)
+    return Response({'error': 'Token does not exist'}, status=401)
 
 @api_view(['POST'])
 @permission_required('fantascout.add_fantatask')
