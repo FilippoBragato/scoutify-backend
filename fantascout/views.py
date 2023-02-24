@@ -23,7 +23,10 @@ def addFantaTask(request):
             if serializer.is_valid():
                 serializer.save()
             return Response(serializer.data)
-    return Response({'error': 'You should not be here'}, status=401)
+        else:
+            return Response({'error': 'You should not be here'}, status=401)
+    else:
+        return Response({'error': 'You should not be here'}, status=401)
 
 
 @api_view(['PUT'])
