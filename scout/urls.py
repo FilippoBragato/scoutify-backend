@@ -10,4 +10,5 @@ urlpatterns = [
     path("patrol/add/", views.addPatrol),
     path("patrol/edit/<int:pk>", views.editPatrol),
     path("patrol/delete/<int:pk>", views.deletePatrol),
+    path("patrol/my/", views.getMyPatrol),
 ]

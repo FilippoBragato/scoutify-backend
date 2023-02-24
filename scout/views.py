@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializer import ScoutSerializer, PatrolSerializer
 from .models import Scout, Patrol
+from django.contrib.auth.models import User
 
 # REST FOR SCOUT
 @api_view(['GET'])
@@ -61,6 +62,19 @@ def getAllPatrols(request):
             serializer = PatrolSerializer(patrol, many=True)
             return Response(serializer.data)
     return Response({'error': 'You should not be here'}, status=401)
+
+@api_view(['GET'])
+def getMyPatrol(request):
+    if request.user.is_authenticated:
+        if request.user.has_perm('scout.view_patrol'):
+            my_scout = Scout.objects.filter(user=request.user.id)[0]
+            my_patrol = Scout.objects.filter(patrol=my_scout.patrol)
+            serializer = ScoutSerializer(my_patrol, many=True)
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'You should not be here'}, status=401)
+    else:
+        return Response({'error': 'You should not be here'}, status=401)
 
 @api_view(['POST'])
 def addPatrol(request):

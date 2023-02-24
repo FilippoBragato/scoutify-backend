@@ -4,7 +4,7 @@ from .models import Scout, Patrol
 class ScoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Scout
-        fields = ('user', 'id', 'birthday', 'patrol', 'verified')
+        fields = '__all__'
 
 class PatrolSerializer(serializers.ModelSerializer):
     class Meta:
