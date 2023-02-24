@@ -4,10 +4,10 @@ from . import views
 urlpatterns = [
     path("task/", views.getAllFantatask),
     path("task/add/", views.addFantaTask),
-    path("task/edit/<int:pk>", views.editFantaTask),
-    path("task/delete/<int:pk>", views.deleteFantaTask),
+    path("task/edit/<int:pk>/", views.editFantaTask),
+    path("task/delete/<int:pk>/", views.deleteFantaTask),
     path("complete/", views.getAllScoutCompleteTask),
     path("complete/add/", views.addScoutCompleteTask),
-    path("complete/edit/<int:pk>", views.editScoutCompleteTask),
-    path("complete/delete/<int:pk>", views.deleteScoutCompleteTask),
+    path("complete/edit/<int:pk>/", views.editScoutCompleteTask),
+    path("complete/delete/<int:pk>/", views.deleteScoutCompleteTask),
 ]
