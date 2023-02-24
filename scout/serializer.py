@@ -10,3 +10,9 @@ class PatrolSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patrol
         fields = '__all__'
+
+class ScoutPatrolSerializer(serializers.ModelSerializer):
+    patrol = PatrolSerializer()
+    class Meta:
+        model = Scout
+        fields = ['id', 'user', 'name', 'patrol', 'verified','birthday']

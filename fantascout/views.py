@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import FantaTask, ScoutCompleteTask
-from .serializer import FantaTaskSerializer, ScoutCompleteTaskSerializer
+from .serializer import FantaTaskSerializer, ScoutCompleteTaskSerializer, JoinScoutCompleteTaskSerializer
 import sys
 
 # REST FOR FANTATASK
@@ -69,6 +69,17 @@ def getAllScoutCompleteTask(request):
             return Response(serializer.data)
     return Response({'error': 'You should not be here'}, status=401)
 
+@api_view(['GET'])
+def getScoutCompleteTaskToValidate(request):
+    if request.user.is_authenticated:
+        if request.user.has_perm('fantascout.view_scoutcompletetask'):
+            fantatasks = ScoutCompleteTask.objects.select_related("task", "scout", "scout__patrol")
+            serializer = JoinScoutCompleteTaskSerializer(fantatasks, many=True)
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'You should not be here'}, status=401)
+    else:
+        return Response({'error': 'You should not be here'}, status=401)
 
 @api_view(['POST'])
 def addScoutCompleteTask(request):
