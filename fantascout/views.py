@@ -83,16 +83,11 @@ def getScoutCompleteTaskToValidate(request):
 
 @api_view(['GET'])
 def getLadder(request):
-    
     if request.user.is_authenticated:
         if request.user.has_perm('fantascout.view_scoutcompletetask'):
             fantatasks = ScoutCompleteTask.objects.select_related("task", "scout", "scout__patrol").filter(checked=True).values('scout__patrol__name').annotate(sum=Sum('task__point')).order_by("-sum")
             serializer = LadderSerializer(fantatasks, many=True)
-            return Response(serializer.data)
-        else:
-            return Response({'error': 'You should not be here'}, status=401)
-    else:
-        return Response({'error': 'You should not be here'}, status=401)
+            return Response(serializer.data, status=200)
 
 @api_view(['POST'])
 def addScoutCompleteTask(request):
