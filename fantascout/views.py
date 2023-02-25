@@ -88,6 +88,7 @@ def getLadder(request):
             fantatasks = ScoutCompleteTask.objects.select_related("task", "scout", "scout__patrol").filter(checked=True).values('scout__patrol__name').annotate(sum=Sum('task__point')).order_by("-sum")
             serializer = LadderSerializer(fantatasks, many=True)
             return Response(serializer.data, status=200)
+    return Response({'error': 'You should not be here'}, status=401)
 
 @api_view(['POST'])
 def addScoutCompleteTask(request):
