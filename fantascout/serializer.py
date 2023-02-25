@@ -18,3 +18,15 @@ class JoinScoutCompleteTaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = ScoutCompleteTask
         fields = ['id', 'date','scout', 'task', 'checked']
+
+class LadderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ScoutCompleteTask
+        fields = []
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['points'] = instance['sum']
+        representation['patrol'] = instance['scout__patrol__name']
+
+        return representation
