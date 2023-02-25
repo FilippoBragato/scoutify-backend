@@ -73,7 +73,7 @@ def getAllScoutCompleteTask(request):
 def getScoutCompleteTaskToValidate(request):
     if request.user.is_authenticated:
         if request.user.has_perm('fantascout.view_scoutcompletetask'):
-            fantatasks = ScoutCompleteTask.objects.select_related("task", "scout", "scout__patrol")
+            fantatasks = ScoutCompleteTask.objects.select_related("task", "scout", "scout__patrol").filter(checked=False)
             serializer = JoinScoutCompleteTaskSerializer(fantatasks, many=True)
             return Response(serializer.data)
         else:
