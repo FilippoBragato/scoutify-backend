@@ -95,7 +95,7 @@ def addScoutCompleteTask(request):
     if request.user.is_authenticated:
         if request.user.has_perm('fantascout.add_scoutcompletetask'):
             d = request.data
-            if request.user.groups.filter(name='ScoutLeader').exists():
+            if request.user.groups.filter(name='Leader').exists():
                 d["checked"] = True
             else:
                 d["checked"] = False
