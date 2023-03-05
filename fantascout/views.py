@@ -90,6 +90,18 @@ def getLadder(request):
             return Response(serializer.data, status=200)
     return Response({'error': 'You should not be here'}, status=401)
 
+@api_view(['GET'])
+def getHistory(request):
+    if request.user.is_authenticated:
+        if request.user.has_perm('fantascout.view_scoutcompletetask'):
+            fantatasks = ScoutCompleteTask.objects.select_related("task", "scout", "scout__patrol").filter(checked=True).order_by("-date")
+            serializer = JoinScoutCompleteTaskSerializer(fantatasks, many=True)
+            return Response(serializer.data, status=200)
+        else:
+            return Response({'error': 'You should not be here'}, status=401)
+    else:
+        return Response({'error': 'You should not be here'}, status=401)
+
 @api_view(['POST'])
 def addScoutCompleteTask(request):
     if request.user.is_authenticated:

@@ -9,6 +9,7 @@ class FantaTask(models.Model):
         SPIRITO_SERVIZIO = 'SS', _('Spirito di Servizio')
         SPIRITO_PATTUGLIA = 'SP', _('Spirito di Pattuglia')
         GIOCHI = 'AW', _('Vincitore di giochi')
+        STILE = 'ST', _('Stile')
 
     description = models.TextField()
     point = models.SmallIntegerField()

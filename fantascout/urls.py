@@ -12,4 +12,5 @@ urlpatterns = [
     path("complete/edit/<int:pk>/", views.editScoutCompleteTask),
     path("complete/delete/<int:pk>/", views.deleteScoutCompleteTask),
     path("complete/ladder/", views.getLadder),
+    path("complete/history/", views.getHistory),
 ]
