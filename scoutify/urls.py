@@ -29,5 +29,6 @@ urlpatterns = [
     path("fantascout/", include("fantascout.urls")),
     path("scout/", include("scout.urls")),
     path("blog/", include("article.urls")),
-    path("authentification/", include("authentification.urls"))
+    path("authentification/", include("authentification.urls")),
+    path("register/", include("register.urls")),
 ]

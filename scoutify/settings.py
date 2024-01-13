@@ -40,8 +40,8 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,filo99.py
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 CORS_ORIGIN_WHITELIST = [
-    'https://scoutify-6374f.web.app/',
-    'http://localhost:3000/'
+    'https://scoutify-6374f.web.app',
+    'http://localhost:3000'
 ]
 CORS_ALLOW_CREDENTIALS = True
 # Application definition
@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "scout",
     "fantascout",
     "article",
+    "register",
     'corsheaders',
 ]
 
