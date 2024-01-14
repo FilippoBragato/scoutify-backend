@@ -8,8 +8,6 @@ class ActivitySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ScoutPartecipationSerializer(serializers.ModelSerializer):
-    scout = ScoutPatrolSerializer()
-    activity = ActivitySerializer()
     class Meta:
         model = ScoutPartecipation
-        fields = ['id', 'date', 'scout', 'activity', 'justification']
+        fields = '__all__'
