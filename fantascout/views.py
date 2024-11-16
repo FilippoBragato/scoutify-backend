@@ -8,12 +8,9 @@ from django.db.models import Sum
 # REST FOR FANTATASK
 @api_view(['GET'])
 def getAllFantatask(request):
-    if request.user.is_authenticated:
-        if request.user.has_perm('fantascout.view_fantatask'):
-            fantatasks = FantaTask.objects.order_by("type", "-point")
-            serializer = FantaTaskSerializer(fantatasks, many=True)
-            return Response(serializer.data)
-    return Response({'error': 'You should not be here'}, status=401)
+    fantatasks = FantaTask.objects.order_by("type", "-point")
+    serializer = FantaTaskSerializer(fantatasks, many=True)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def addFantaTask(request):
@@ -83,24 +80,15 @@ def getScoutCompleteTaskToValidate(request):
 
 @api_view(['GET'])
 def getLadder(request):
-    if request.user.is_authenticated:
-        if request.user.has_perm('fantascout.view_scoutcompletetask'):
-            fantatasks = ScoutCompleteTask.objects.select_related("task", "scout", "scout__patrol").filter(checked=True).values('scout__patrol__name').annotate(sum=Sum('task__point')).order_by("-sum")
-            serializer = LadderSerializer(fantatasks, many=True)
-            return Response(serializer.data, status=200)
-    return Response({'error': 'You should not be here'}, status=401)
+    fantatasks = ScoutCompleteTask.objects.select_related("task", "scout", "scout__patrol").filter(checked=True).values('scout__patrol__name').annotate(sum=Sum('task__point')).order_by("-sum")
+    serializer = LadderSerializer(fantatasks, many=True)
+    return Response(serializer.data, status=200)
 
 @api_view(['GET'])
 def getHistory(request):
-    if request.user.is_authenticated:
-        if request.user.has_perm('fantascout.view_scoutcompletetask'):
-            fantatasks = ScoutCompleteTask.objects.select_related("task", "scout", "scout__patrol").filter(checked=True).order_by("-date")
-            serializer = JoinScoutCompleteTaskSerializer(fantatasks, many=True)
-            return Response(serializer.data, status=200)
-        else:
-            return Response({'error': 'You should not be here'}, status=401)
-    else:
-        return Response({'error': 'You should not be here'}, status=401)
+    fantatasks = ScoutCompleteTask.objects.select_related("task", "scout", "scout__patrol").filter(checked=True).order_by("-date")
+    serializer = JoinScoutCompleteTaskSerializer(fantatasks, many=True)
+    return Response(serializer.data, status=200)
 
 @api_view(['POST'])
 def addScoutCompleteTask(request):
